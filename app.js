@@ -37,7 +37,12 @@ function addGifToContainer(gif) {
   $GIF_CONTAINER.append($(`<img src=${gifURL}>`));
 }
 
+function deleteGifs() {
+  $GIF_CONTAINER.content = "";
+}
+
 $SUBMIT_BUTTON.on("click", getGif);
+$DELETE_BUTTON.on("click", deleteGifs);
 
 // async function getCard() {
 //   let response = await axios.get(
