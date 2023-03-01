@@ -1,17 +1,16 @@
 "use strict";
 
 const $SUBMIT_BUTTON = $("#submit-button");
-const $DELETE_BUTTON = $("delete-button");
+const $DELETE_BUTTON = $("#delete-button");
+const $GIF_CONTAINER = $(".Gif-container");
 let $gifInput;
 // http://api.giphy.com/v1/gifs/search?q=
-
 
 /** Gets a random number between 0 and the number of gifs */
 
 function getRandomInt(numOfGifs) {
   return Math.floor(Math.random() * numOfGifs);
 }
-
 
 /** */
 
@@ -22,24 +21,23 @@ async function getGif(event) {
   let groupOfGifs = await axios.get(
     `http://api.giphy.com/v1/gifs/search?q=${$gifInput}&api_key=MhAodEJIJxQMxW9XqxKjyXfNYdLoOIym`
   );
-
-  addGifToContainer(groupOfGifs.data.data);
+  // let randomGif = getRandomInt(groupOfGifs.data.data);
+  // console.log(groupOfGifs.data.data);
+  let randomIndex = getRandomInt(groupOfGifs.data.data.length);
+  // console.log(groupOfGifs.data.data[randomIndex]);
+  console.log(groupOfGifs.data.data);
+  addGifToContainer(groupOfGifs.data.data[randomIndex]);
 }
 
 /**  */
 
-function addGifToContainer(gifs) {
-
-  const randomInt = getRandomInt(gifs.length);
-
-  console.log(gifs[randomInt].url);
+function addGifToContainer(gif) {
+  let gifURL = gif.images.fixed_width.url;
+  // console.log(gifURL);
+  $GIF_CONTAINER.append($(`<img src=${gifURL}>`));
 }
 
-
-
-
-
-$SUBMIT_BUTTON.on("submit", getGif);
+$SUBMIT_BUTTON.on("click", getGif);
 
 // async function getCard() {
 //   let response = await axios.get(
